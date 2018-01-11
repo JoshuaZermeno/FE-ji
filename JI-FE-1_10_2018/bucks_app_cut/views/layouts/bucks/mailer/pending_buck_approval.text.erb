@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1><%= @user.first_name %>,</h1>
+    <p>
+      There is a buck for <b><%= ::Employee.find(@buck.employee_id).full_name %></b> 
+      issued by <b><%= ::Employee.find(@buck.issuer_id).full_name %></b> 
+      from <%= ::Department.find(@buck.department_id).name %> that is awaiting your approval.<br>
+    </p>
+    <p>
+      To approve this buck, go to <%= @url %>.
+    </p>
+  </body>
+</html>

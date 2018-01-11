@@ -1,0 +1,104 @@
+<% content_for :title, "Issued" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="/employees">Employees</a></li>
+    <li><a href="/employees/analyze/<%= @current_user.IDnum %>">Analyze</a></li> 
+    <li><%= @employee.full_name %></li>               
+</ul>
+<!-- END BREADCRUMB -->  
+
+<!-- START TITLE -->
+<div class="page-title">                    
+    <h2><span class="fa fa-plus-circle"></span> Analyze Employee</h2>
+</div>
+<!-- END TITLE -->
+
+<div class="page-content-wrap">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <%= form_tag (''), :method => 'get', :id => 'time_filter' do %>
+              <div class="col-md-3">
+                <%= select_tag :month, options_for_select(@months), include_blank: "Month", class: 'form-control' %>
+              </div>
+              <div class="col-md-3">
+                <%= select_tag :year, options_for_select(@years), include_blank: "Year", class: 'form-control' %>
+              </div>
+              <div class="col-md-3">
+                <%= submit_tag 'Show', id: 'time_filter_button', class: 'btn btn-primary' %>
+                <div class='btn btn-primary'>
+                    Back
+                </div>
+              </div> 
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <% if !@month.nil? && !@year.nil? %>
+          <% @month_num = Date::MONTHNAMES.index(@month) %>
+          <h3>Budget Report: <%= @employee.full_name %> (<%= @month %>, <%= @year %>)</h3>
+          <% budget_used = @employee.get_personal_budget_used(@month_num, @year) %>
+
+          <div class="row">
+            <div class="col-md-4">
+              <table class="table table-condensed">
+            <tr>
+              <td>Issued: </td>
+              <td> <%= @bucks.count %> </td>
+            </tr>
+            <tr>
+              <td>Personal Budget Used: </td>
+              <td> 
+                <p class = <%= p_class_for_budget(budget_used, @budget_per_employee)%>>
+                  <%= @employee.get_personal_budget_used_percent(@month_num, @year) %>%
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>Department Budget Used: </td>
+              <td> 
+                <p class = <%= p_class_for_budget(budget_used, @budget_per_employee)%>>
+                  <%= @employee.get_department_budget_used_percent(@month_num, @year) %>%
+                </p>
+              </td>
+            </tr>
+            <% @buckets.each do |bucket| %>
+            <tr>
+              <td><%= bucket.name %>: </td>
+              <td> <%= @bucks.where(bucket_id: bucket.id).count %> </td>
+            </tr>
+            <% end %>
+          </table>
+            </div>
+            <div class="col-md-8">
+              <div style="height: 300px;">
+                <svg id="budget_line_graph"></svg>
+              </div>
+            </div>
+          </div>
+          
+          <%= render 'bucks/bucks/bucks_route_detail' %>
+
+          <table class="table table-condensed hidden" id="bucks_graph_data" display="none">
+            <% @bucks_by_day.each do |d| %>
+              <tr><td><%= d[0].day %></td><td><%= d[1] %></td></tr>
+            <% end %>
+          </table>
+          
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

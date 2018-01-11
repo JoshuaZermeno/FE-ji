@@ -1,0 +1,42 @@
+<% content_for :title, "Report Issue" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li>Report</li>             
+</ul>
+<!-- END BREADCRUMB --> 
+
+<!-- START TITLE -->
+<div class="page-title">                    
+    <h2><span class="fa fa-exclamation-circle"></span> Report Issue</h2>
+</div>
+<!-- END TITLE --> 
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+	<div class="row">
+	  <div class="col-md-6">
+	    <div class="panel panel-default panel-body">
+
+	        <p>If you have encountered an error while using the bucks application, please fill out the form below:</p>
+
+	        <p class="text-muted"><b>From: #<%= @current_user.IDnum %> <%= @current_user.full_name %></b></p>
+
+	        <%= form_tag :action => 'issue_deliver' do %>
+
+	        <p><label for = "issue_ur">Please copy and paste the URL where you encountered the problem</label>:
+	        <%= text_field_tag :issue_url, params[:issue_url], id: 'issue_url', placeholder: 'Example: http://bucks.hollywoodcasinotoledo.org/favorites', class: "form-control" %></p>
+
+	        <p><label for = "issue_message">Describe the issue and what you were doing when you encountered the problem</label>:
+	        <%= text_area_tag 'issue_message', nil, size: "64x10", id: 'issue_message', class: 'form-control' %></p>
+
+	        <br/>
+
+	        <%= submit_tag 'Submit', class: 'btn btn-primary' %>
+
+	        <% end -%>
+	    </div>
+	  </div>
+	</div>
+</div>

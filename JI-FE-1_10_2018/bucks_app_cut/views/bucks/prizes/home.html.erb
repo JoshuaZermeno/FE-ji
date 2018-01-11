@@ -1,0 +1,31 @@
+<div class="row">
+  <div class = "col-sm-8">
+    <div class = "panel panel-default">
+      <div class="panel-heading">News</div>
+      <div class="panel-body">
+        <center><%= render 'news_slideshow' %></center>
+        <%= render 'newsfeed' %>
+      </div>
+    </div>
+
+
+  </div>
+			
+  <div class = "col-sm-4">
+      <div class = "panel panel-default">
+        <div class="panel-heading">Leaderboards</div>
+        <div class="panel-body">
+          <%= render 'leaderboards' %>
+        </div>
+      </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="panel panel-default left-float">
+      <div class="panel-heading">Spotlight Prize</div>
+      <div class="panel-body">
+        <%= render '/prizes/prizes_line_home' %>
+      </div>
+    </div>
+  </div>
+</div>

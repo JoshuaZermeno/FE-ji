@@ -1,0 +1,40 @@
+<div class="login-container" id ="snow">
+
+  <div class="login-box animated fadeInDown">
+    <div class="login-logo"> <img src="" id="logo"></div>
+    <div class="login-body">
+      <div class="login-title"><strong>Log in</strong></div>
+      <%= form_for(:session, url: login_path, html: {class: "form-horizontal"}) do |f| %>
+      <div class="form-group">
+        <div class="col-md-12">
+          <%= f.text_field :id, class: 'form-control', placeholder: "ID Number", autocomplete: "off" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-12">
+          <%= f.password_field :password, class: 'form-control', id: 'password', type: 'password', placeholder: "Password", autocomplete: "off" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-6">
+        <%= link_to 'Swipe In', {controller: :sessions, action: :new_swipe}, class: "btn btn-primary btn-block" %>
+        </div>
+        <div class="col-md-6">
+          <button class="btn btn-primary btn-block">Log In</button>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <div class="login-footer">
+      <div class="pull-left">
+        
+      </div>
+      <div class="pull-right">
+        <%= link_to "Login", controller: :sessions, action: :new %> | 
+        <%= link_to "Reset Password", controller: :employees, action: :reset_password %>
+      </div>
+    </div>
+  </div>
+
+</div>
+    

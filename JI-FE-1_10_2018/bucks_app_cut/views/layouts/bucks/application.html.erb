@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>        
+    <!-- META SECTION -->
+    <title><%= (yield(:title) + " | " unless yield(:title).blank?).to_s + "Bucks" %></title>             
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- END META SECTION -->
+    
+    <!-- LESSCSS INCLUDE -->   
+    <%= stylesheet_link_tag "theme-bucks", id: "theme", media: "all" %>  
+    <%= javascript_include_tag "bucks/application", "data-turbolinks-track" => true %>      
+    <!-- EOF LESSCSS INCLUDE -->   
+
+  </head>
+  <body>
+    <noscript><div class="alert alert-danger">You do not have Javascript enabled. Many features of this site require Javascript. Please visit http://enable-javascript.com/ to learn how to enabled it.</div></noscript>
+
+    <div class="page-container">
+      <%= render 'bucks/layouts/navigation' %>
+      <div class="page-content">
+      <%= render 'bucks/layouts/x_navigation' %>
+      <%= render 'bucks/layouts/flashes' %>
+        <%= yield %>
+      </div>
+    </div>
+
+  </body>
+</html>

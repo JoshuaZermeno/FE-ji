@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+	<p>Congratulations <%= @user.first_name %>,</p>
+
+	<p>You have just been awarded a buck for <%= Bucks::Bucket.find(@buck.bucket_id).name %> from <%= @issuer.full_name %> worth <%= @buck.value %> bucks!</p>
+
+	<p>To view your buck, go here (login may be required): <br>
+	<a>http://bucks.hollywoodcasinotoledo.com/bucks/<%= @buck.number %></a></p>
+
+	Want to stop receiving emails? <a href="http://bucks.hollywoodcasinotoledo.com/mail/optout/<%= @user.IDnum %>">Click Here</a>
+</body>
+</html>

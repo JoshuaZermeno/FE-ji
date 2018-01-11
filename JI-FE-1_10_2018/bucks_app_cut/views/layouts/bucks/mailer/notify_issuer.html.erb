@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+	<p><%= @issuer.first_name %>,</p>
+
+	<% if @decision == 'Approved' %>
+		<p>Your buck awarded to <%= @employee.full_name %> has been <b><%= @decision %></b>!</p>
+
+		<p>To review the buck, please go here (login may be required): <br>
+		<a>http://bucks.hollywoodcasinotoledo.com/bucks/<%= @buck.number %></a></p>
+	<% else %>
+		<p>Your buck awarded to <%= @employee.full_name %> has been <b><%= @decision %></b>.</p>
+		<p><b>Reason:</b> <%= @reason %></p>
+		<p>The buck will no longer hold value. If you wish to resubmit a new buck, please visit:</p>
+		<p>http://bucks.hollywoodcasinotoledo.com/bucks/new</p>
+	<% end %>
+
+</body>
+</html>

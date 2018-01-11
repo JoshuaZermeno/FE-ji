@@ -1,0 +1,17 @@
+ <div class="featured-home-wrapper">
+    <div class="featured-home">
+      <% if @featured.blank? %>
+        <p>No prizes just yet!</p>
+      <% else %>
+        <% @featured.each do |p| %>
+              <%= link_to controller: :prizes, action: :show, id: p.id do %>
+                  <div class = "featured-store-container" style="background-image: url('<%= p.get_first_image %>')">
+                    <div class = "header">
+                      <div class = "price">$<%= p.price %></div>
+                      <p class = "home-name"><b><%= p.name %></b></p>
+                    </div>
+                  </div>
+        <% end end %>
+      <% end %>
+    </div>
+ </div>

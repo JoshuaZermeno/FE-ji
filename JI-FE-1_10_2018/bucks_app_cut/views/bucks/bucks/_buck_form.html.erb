@@ -1,0 +1,103 @@
+<%= form_tag ('new'), :action => 'new', method: 'GET', id: 'new_buck_get_form' do %>
+
+<div class="row">
+  <div class="col-xs-12 col-lg-3">
+    <div id="name_panel" class="panel panel-default">
+      <div class="panel-body">
+        <h3>Search Employee 
+        
+        <div class="btn btn-danger btn-condensed pull-right" id="clear_employee">Clear</div>
+        <button class="btn btn-primary btn-condensed pull-right">Search</button>
+        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="" data-original-title="Enter employee data in either of the 3 fields below and hit Enter on your keyboard or click the search button to search. Click an employee from the search results below to select."><b>?</b></button></h3>
+        <p><label for = "buck_employee_id">ID Number</label>:
+        <%= text_field_tag :employee_id, params[:employee_id], class: 'form-control' %></p>
+
+        <p><label for = "buck_first_name">First Name</label>:
+        <%= text_field_tag :employee_first, params[:employee_first], class: 'form-control' %></p>
+
+        <p><label for = "buck_last_name">Last Name</label>:
+        <%= text_field_tag :employee_last, params[:employee_last], class: 'form-control' %></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-lg-3">
+    <div id="information_panel" class="panel panel-default">
+      <div class="panel-body">
+        <h3>Buck Information</h3>
+
+        <label for = "bucket_name">Earned for</label>:
+        <%= select_tag :bucket_name, options_for_select(@buckets, params[:bucket_name]), { class: 'form-control', include_blank: "Select Bucket"} %></p>
+
+        <% if !@bucket.nil? %>
+          <% if @current_user.can_approve_bucks && @bucket.value.nil? # If there is a range %>
+            <p><label for = "value">Buck Value</label>:
+            <%= text_field_tag :value, @bucket_value, {readonly: false, class: 'form-control'}  %>
+          <% else %>
+            <p><label for = "value">Buck Value</label>:
+            <%= text_field_tag :value, @bucket_value, {readonly: true, class: 'form-control'}  %>
+          <% end %>
+
+          <% if @date_required %>
+            <p><label for = "bucket_name">Earned on (day/month/year)</label>:
+            <%= text_field_tag :performed_at, params[:performed_at], {class: 'form-control input-group date datepicker', 'data-provide' => 'datepicker', 'data-date-format' => "dd/mm/yyyy"}%></p>
+          <% end %>
+        <% end %>
+          
+      </div>
+    </div>
+  </div>
+
+  <% if @reason_required %>
+    <div class="col-xs-12 col-lg-3">
+      <div id='reason_panel' class="panel panel-default" >
+        <div class="panel-body">
+          <h3 for="buck_reason">Reason Earned</h3>
+          <p><a class="list-expand" onclick="toggle_reasons();" id="toggle_reasons">+ Common Reasons</a></p>
+
+          <%= text_area_tag :reason, nil, size: "32x6", onkeyup: "updateLength()", class: 'form-control' %>
+
+          <div id='reason_options' style="display: none;">
+            <ul class="list-group border-bottom">
+              <li class="list-group-item" onclick="updateReasonValue(this);">Preventing or identifying a VEP on property</li>
+              <li class="list-group-item" onclick="updateReasonValue(this);">Notifying proper personnel or taking care of a safety issue</li>
+              <li class="list-group-item" onclick="updateReasonValue(this);">Detecting theft on property</li>
+              <li class="list-group-item" onclick="updateReasonValue(this);">Identifying a minor on property</li>
+              <li class="list-group-item" onclick="updateReasonValue(this);">Identifying a fake ID being used</li>
+              <li class="list-group-item" onclick="updateReasonValue(this);">Detecting counterfeit money</li>
+            </ul>
+          </div>
+		  
+
+          <p class="form-note" id="text_length">0/250 characters max</p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= hidden_field_tag 'bucket_min', @bucket.min if !@bucket.nil? %>
+  <%= hidden_field_tag 'bucket_max', @bucket.max if !@bucket.nil? %>
+  <%= hidden_field_tag 'bucket_require_date', @date_required %>
+  <%= hidden_field_tag 'bucket_require_approval', @approval_required %>
+
+  <%= submit_tag 'Submit', class: 'btn btn-primary btn-xxl hidden' %> 
+  <% end %>
+
+  <div class="col-xs-12 col-lg-3">
+  <%= form_tag (''), controller: :bucks, action: 'create', id: 'new_buck_post_form' do %>
+  <%= hidden_field_tag 'buck[employee_id]', '' %>
+  <%= hidden_field_tag 'buck[bucket_name]', '' %>
+  <%= hidden_field_tag 'buck[value]', '' %>
+  <%= hidden_field_tag 'buck[performed_at]', '' %>
+  <%= hidden_field_tag 'buck[reason]', '' %>
+  <button class="btn btn-primary btn-xxl" id="buck_post">Submit</button>
+  <%= submit_tag 'Submit', class: 'btn btn-primary btn-xxl hidden' %>
+  <% end %>
+</div>
+
+</div>
+
+
+
+
+
+

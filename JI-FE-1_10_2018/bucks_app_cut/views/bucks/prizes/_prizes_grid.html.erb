@@ -1,0 +1,38 @@
+<% if @prizes.blank? %>
+	<p>None</p>
+<% else %>
+	<% @prizes.each_with_index do |p, i| 
+      @inventorys = Bucks::Inventory.where(prize_id: p.id).order(:price) %>
+          <div class="col-md-3 col-sm-4 col-xs-6">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <%= link_to controller: :prizes, action: :show, id: p.id do %>
+                <div class="prize-container" style="background-image: url('<%= p.get_first_image %>')">
+                  <div class="header">
+                    <div class = "price"><%= p.display_price %></div>
+                  </div>
+                </div>
+                <% end %>
+                <div class="prize-info">
+                  <%= link_to p.name, action: :show, id: p.id %>
+                      <% @inventory = Bucks::Inventory.where(prize_id: p.id) %>
+                  <% if p.must_order %>
+                          <br/>Prize must be ordered
+                      <% else %>
+                          <br/><%= p.get_total_stock %> In Stock
+                  <% end %>
+                  <div class="prize-info--favorites img-hover">
+                    <% @inventory.group(:color).each do |c|
+                    if c.color != '' %>
+                      <div class = "color" style="background-color:<%= get_color_code(c.color) %>""></div>
+                    <% end end %>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+	<% end %>
+<% end %>
+
+

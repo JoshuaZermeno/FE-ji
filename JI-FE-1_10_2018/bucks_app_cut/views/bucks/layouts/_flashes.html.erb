@@ -1,0 +1,23 @@
+<% if flash[:notice].is_a?(Hash) %>
+	<% if flash[:title] == "Error" %>
+		<div class="alert alert-danger">
+	<% elsif flash[:title] == "Success" %>
+		<div class="alert alert-success">
+	<% end %>
+  <% flash[:notice].each_with_index do | (k, m), i | %>
+    <%= m[0] %>
+    <%= '<br>'.html_safe unless i == flash[:notice].size - 1 %>
+  <% end %>
+  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>
+  </div>
+<% else %>
+	<!-- START FLASH -->                     
+	<% if flash[:title] == "Error" %>
+		<div class="alert alert-danger"><%= flash[:notice] %><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button></div>
+	<% elsif flash[:title] == "Success" %>
+		<div class="alert alert-success"><%= flash[:notice] %><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button></div>
+	<% elsif flash[:title] == "Warning" %>
+		<div class="alert alert-warning"><%= flash[:notice] %><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button></div>
+	<% end %>
+	<!-- END FLASH -->
+<% end %>

@@ -1,0 +1,29 @@
+<% content_for :title, "Buck ##{@buck.number}" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="/bucks">Bucks</a></li>
+    <li>Show Buck</li>               
+</ul>
+<!-- END BREADCRUMB -->  
+
+<!-- START TITLE -->
+<div class="page-title">                    
+    <h2><span class="fa fa-money"></span> Show Buck</h2>
+</div>
+<!-- END TITLE -->
+
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default panel-body">
+        <div class="table-responsive">
+          <%= render 'buck_detail' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

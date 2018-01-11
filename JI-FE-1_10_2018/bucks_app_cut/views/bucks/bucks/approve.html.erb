@@ -1,0 +1,54 @@
+<% content_for :title, "Approve Buck" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="/bucks">Bucks</a></li>
+    <li>Pending Approval</li>               
+</ul>
+<!-- END BREADCRUMB -->  
+
+<!-- START TITLE -->
+<div class="page-title">                    
+    <h2><span class="fa fa-clock-o"></span> Bucks Requiring Your Approval</h2>
+</div>
+<!-- END TITLE -->
+
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default panel-body">
+        <div class="table-responsive">
+          <%= render 'buck_detail' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="panel panel-default panel-body">
+        <%= form_tag :action => 'update' do %>
+
+          <label for = "buck-value">Approving Value:</label>
+            <%= text_field 'buck', 'value', value: @buck.value, class: "form-control" %>
+            <%= hidden_field_tag :id, @buck.id %>
+            <%= hidden_field_tag :decision, 'Approve' %><br/>
+            <%= submit_tag 'Approve', class: 'btn btn-primary' %>
+        <% end -%>
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <div class="panel panel-default panel-body">
+        <%= form_tag :action => 'update' do %>
+          <label for = "buck-value">Reason for Denial:</label>
+          <%= text_area_tag 'buck[denial_reason]', nil, size: "32x6", id: 'reason_long', class: "form-control" %>
+          <%= hidden_field_tag :id, @buck.id %>
+          <%= hidden_field_tag :decision, 'Deny' %><br/>
+          <%= submit_tag 'Deny', class: 'btn btn-primary' %>
+        <% end -%>
+      </div>
+    </div>
+  </div>
+</div>

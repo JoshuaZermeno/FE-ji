@@ -1,0 +1,101 @@
+<% content_for :title, "Edit Prize" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>  
+    <li><a href="/prizes">Store</a></li>
+    <li><a href="/prizes/manage">Manage</a></li>
+    <li><%= @prize.name %></li>
+    <li>Edit</li>                
+</ul>
+<!-- END BREADCRUMB -->  
+
+<!-- START TITLE -->
+<div class="page-title">                    
+    <h2><span class="fa fa-shopping-cart"></span> Edit Prize</h2>
+</div>
+<!-- END TITLE -->
+
+<div class="page-content-wrap">
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default panel-body">
+        <%= form_for :prize, :url => {:controller => :prizes, action: :edit} do |f| %>
+        <div class="form-group">
+
+          <p><label for = "prize_name">Item Name</label>:
+          <%= f.text_field :name, id: 'prize_name', class: 'form-control' %></p>
+
+          <p><label for = "prize_limit">Limit Per Team Member</label>:<br>
+          <%= f.text_field :limit, id: 'prize_limit', class: 'form-control' %></p>
+
+          <p><label for = "prize_price">Category</label>:<br>
+          <%= f.select(:category, options_for_select(Bucks::Prize::CATEGORIES, @prize.category), {}, class: 'form-control') %></p>
+
+          <p><label for="prize_available">Available: </label>
+          <label class="switch switch-small">
+            <%= f.check_box :available, {}, 'true', 'false' %>
+            <span></span>
+          </label></p>
+
+          <p><label for="prize_must_order">Must Be Reserved and Ordered: </label>
+          <label class="switch switch-small">
+            <%= f.check_box :must_order, {}, 'true', 'false' %>
+            <span></span>
+          </label></p>
+
+          <p><label for="prize_date">Request Date: </label>
+          <label class="switch switch-small">
+            <%= f.check_box :request_date, {}, 'true', 'false' %>
+            <span></span>
+          </label></p>
+
+          <p><label for="prize_featured">Featured Item: </label>
+          <label class="switch switch-small">
+            <%= f.check_box :featured, {}, 'true', 'false' %>
+            <span></span>
+          </label></p>
+
+          <p><label for="prize_in_store_only">In Store Purchase Only: </label>
+          <label class="switch switch-small">
+            <%= f.check_box :in_store_only, {}, 'true', 'false' %>
+            <span></span>
+          </label></p>
+
+          <p><label for = "prize_description">Description</label>:<br>
+
+          <% if @prize.nil? %>
+          <%= f.text_area :description, size: "32x6", class: 'form-control' %>
+          <% else %>
+          <%= f.text_area :description, size: "32x6", class: 'form-control' %>
+          <% end %>
+
+          <p class = "form-note">250 characters max</p>
+
+          <%= f.submit 'Submit', class: 'btn btn-primary' %>
+          <%= link_to "Cancel", {controller: :prizes, action: :manage}, class: 'btn btn-primary' %>
+          </div>
+        <% end -%>
+      </div>
+<!--       <div id="btn_delete_item" class="btn btn-danger">Delete Prize</div>
+      <div id="delete_item_popup" class="message-box message-box-danger animated fadeIn">
+        <div class="mb-container">
+          <div class="mb-middle">
+            <div class="mb-title"><span class="fa fa-times"></span> Danger</div>
+            <div class="mb-content">
+              <p style="font-size: 14px;">This prize may be associated with many other items around the site such as purchases,
+              logs, favorites, notifications, and more. If there have been any purchases made on an item,
+              the item must remain in the system and cannot be deleted. If there is an error in creating an item, be sure to delete it immediately before purchases are made on it. If you wish to delete this item, select the "Delete Prize" button below. However, if the item has any relations among the site, the item will not be deleted.</p>
+            </div>
+            <div class="mb-footer">
+              <%= link_to 'Delete Prize', {controller: :prizes, action: :destroy, id: @prize.id}, class: 'btn btn-default btn-lg pull-right' %>
+              <button class="btn btn-default btn-lg pull-right mb-control-close" id="btn_close_danger">Close</button>
+            </div>
+          </div>
+        </div>
+      </div> -->
+            
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<!-- START X-NAVIGATION VERTICAL -->
+<ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+    <!-- TOGGLE NAVIGATION -->
+    <li class="xn-icon-button">
+        <a href="#" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+    </li>
+
+
+    <li class="xn-icon">
+        <a href="#"><b>Apps</b></a>
+        <ul class="xn-drop-left xn-drop-black animated zoomIn">
+          	<li> <a href="#">Bucks</a> </li>
+            <li> <a href="/mysize">mySize</a> </li>
+            <li> <a href="/polls">Polls</a> </li>
+        </ul>                        
+    </li>
+    
+    <% if !@current_user.super %>
+        <li class="xn-icon">
+          <a href="#" class="x-navigation"><b><%= Property.find(session[:property]).name %></b></a>
+        </li>
+    <% else %>
+      <li class="xn-icon">
+          <a href="#"><b><%= Property.find(session[:property]).name %></b></a>
+          <ul class="xn-drop-left xn-drop-black animated zoomIn">
+            <% Property.all.each do |p| %>
+              <li> <%= link_to p.name, { controller: :admin, action: :switch_property, id: p.id} %> </li>
+            <% end %>
+          </ul>                        
+      </li>
+    <% end %>
+
+
+    <!-- END TOGGLE NAVIGATION -->            
+              
+    <li class="xn-icon-button pull-right">
+        <a href="/logout"><span class="fa fa-sign-out"></span></a>                       
+    </li>     
+    
+    <li class="xn-icon-button pull-right">
+        <a href="#"><span class="fa fa-bell"></span></a>
+        <div class="informer informer-danger"><%= @current_user.get_unread_notification_count %></div>
+        <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
+            <%= render 'bucks/notifications/notification_feed' %>                 
+        </div>                        
+    </li>
+
+    <li class="xn-icon-button tile tile-nav tile-purple-default pull-right">
+        $<%= @current_user.get_bucks_balance %>  
+    </li>    
+
+</ul>

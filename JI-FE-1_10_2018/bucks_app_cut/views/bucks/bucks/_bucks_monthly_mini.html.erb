@@ -1,0 +1,22 @@
+<% if @bucks_month.blank? %>
+	<p>None</p>
+<% else %>
+<div class="table-responsive">
+	<table class = 'table-list'>
+		<tr class = "tr-list-head" >
+			<td class = "td-list"><%= buck_sortable "number" %></td>
+			<td class = "td-list"><%= buck_sortable "value" %></td>
+			<td class = "td-list"><%= buck_sortable "reason_short" %></td>
+			<td class = "td-list"><%= buck_sortable "status" %></td>
+		</tr>
+		<% @bucks_month.each do |b|  %>
+		<tr class = "tr-list" onclick=" window.document.location = '<%= buck_path(b) %>'; ">
+			<td class = "td-list"> <%= b.number %> </td>
+			<td class = "td-list"> <%= b.value %> </td>
+			<td class = "td-list"> <%= b.reason_short %> </td>
+			<td class = "td-list"> <%= b.status %> </td>
+		</tr>
+		<% end %>
+	</table>
+</div>
+<% end %>

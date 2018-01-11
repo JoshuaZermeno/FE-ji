@@ -1,0 +1,52 @@
+<% content_for :title, "All Employees" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>  
+    <li><a href="/employees">Employees</a></li>             
+</ul>
+<!-- END BREADCRUMB -->  
+
+<!-- START TITLE -->
+<div class="page-title">                    
+    <h2><span class="fa fa-male"></span> All Employees</h2>
+</div>
+<!-- END TITLE -->
+
+<div class="page-content-wrap">
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <%= form_tag (''), :method => 'get', :id => 'employee_search' do %>
+              <div class="col-md-3">
+                <%= text_field_tag :search_id, params[:search_id], placeholder: "ID", class: 'form-control' %>
+              </div>
+              <div class="col-md-3">
+                <%= text_field_tag :search_first_name, params[:search_first_name], placeholder: "First Name", class: 'form-control' %>
+              </div>
+              <div class="col-md-3">
+                <%= text_field_tag :search_last_name, params[:search_last_name], placeholder: "Last Name", class: 'form-control' %>
+              </div>
+              <div class="col-md-3">
+                <%= submit_tag 'Search', id: 'search_employee_button', class: 'btn btn-primary' %>
+              </div> 
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default panel-body">
+        <div id = "employees_table">
+          <%= render 'employees_route_detail' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

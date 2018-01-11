@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="en" class="body-full-height">
+
+<head>
+  <title><%= (yield(:title) + " | " unless yield(:title).blank?).to_s + "HR Apps" %></title>           
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <%= stylesheet_link_tag "theme-default", id: "theme", media: "all" %>  
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+</head>
+
+<body>
+	<% if flash[:notice].is_a?(Hash) %>
+		<% if flash[:title] == "Error" %>
+			<div class="alert alert-danger">
+		<% elsif flash[:title] == "Success" %>
+			<div class="alert alert-success">
+		<% end %>
+	  <% flash[:notice].each_with_index do | (k, m), i | %>
+	    <%= m[0] %>
+	    <%= '<br>'.html_safe unless i == flash[:notice].size - 1 %>
+	  <% end %>
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>
+	  </div>
+	<% else %>
+		<!-- START FLASH -->                     
+		<% if flash[:title] == "Error" %>
+			<div class="alert alert-danger"><%= flash[:notice] %><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button></div>
+		<% elsif flash[:title] == "Success" %>
+			<div class="alert alert-success"><%= flash[:notice] %><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button></div>
+		<% elsif flash[:title] == "Warning" %>
+			<div class="alert alert-warning"><%= flash[:notice] %><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button></div>
+		<% end %>
+		<!-- END FLASH -->
+	<% end %>
+  <%= yield -%>
+</body>
+
+</html>

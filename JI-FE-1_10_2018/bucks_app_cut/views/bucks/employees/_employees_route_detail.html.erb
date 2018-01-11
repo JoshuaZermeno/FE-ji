@@ -1,0 +1,30 @@
+<% if @employees.blank? %>
+	<p>Search for an employee using the given fields.</p>
+<% else %>
+<div class="table-responsive">
+	<table class='table table-striped'>
+		<thead>
+			<th>Employee #</th>
+			<th>Employee Name</th>
+			<th>Position</th>
+			<th class="center">Balance</th>
+			<th class="center">Earned This Month</th>
+			<th class="center">Earned This Year</th>
+			<th class="center">Status</th>
+		</thead>
+		<tbody>
+		<% @employees.each do |e|  %>
+			<tr class = "tr-clickable" onclick=" window.document.location = '<%= employee_path(e) %>'; ">
+			<td> <%= e.id %> </td>
+			<td> <%= e.first_name + " " + e.last_name %> </td>
+			<td> <%= Job.find(e.job_id).title %> </td>
+			<td class="center"> $<%= e.get_bucks_balance %> </td>
+			<td class="center"> <%= e.get_bucks_earned_month(@month_i) %> ($<%= e.get_amount_earned_month(@month_i) %>) </td>
+			<td class="center"> <%= e.get_bucks_earned_year(@year) %> ($<%= e.get_amount_earned_year(@year) %>) </td>
+			<td class="center"> <%= e.status %> </td>
+		</tr>
+		<% end %>
+		</tbody>
+	</table>
+</div>
+<% end %>

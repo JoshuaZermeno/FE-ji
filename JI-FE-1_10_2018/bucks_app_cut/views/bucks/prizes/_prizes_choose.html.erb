@@ -1,0 +1,20 @@
+<% if @prizes.blank? %>
+	<p>None</p>
+<% else %>
+<div class="table-responsive">
+	<table class = 'table-list' id = 'table-prizes-choose'>
+		<tr class = "tr-list-head" >
+			<td class = "td-list">Prize</td>
+			<td class = "td-list">Price</td>
+			<td class = "td-list">Image</td>
+		</tr>
+		<% @prizes.each do |p|  %>
+		<tr class = "tr-list">
+			<td class = "td-list"> <%= p.name %> </td>
+			<td class = "td-list"> <%= p.price %> </td>
+			<td class = "td-list"> <%= p.image %> </td>
+		</tr>
+		<% end %>
+	</table>
+</div>
+<% end %>

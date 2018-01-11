@@ -1,0 +1,75 @@
+<% content_for :title, "Notifications" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>  
+    <li>Notifications</li>             
+</ul>
+<!-- END BREADCRUMB -->  
+
+<!-- START TITLE -->
+<div class="page-title">                    
+    <h2><span class="fa fa-bell"></span> Notifications</h2>
+</div>
+<!-- END TITLE -->
+<div class="page-content-wrap">
+  <div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-8">
+    	<div class="panel panel-default panel-body-table table-responsive push-down-0">
+	    	<table class="table">
+	    		<tr>
+	    			<td><b>Unread:</b> <%= @notifications_unread.count %></td>
+	    			<td><b>Total:</b> <%= @notifications.count %></td>
+	    		</tr>
+	    	</table>
+	    </div>
+    </div>
+  </div>
+	<%= form_tag controller: :notifications, action: :mark_as_read do %>
+  <div class="panel-body">
+  	<%= submit_tag 'Mark As Read', class: "btn btn-primary" %>
+  	<div id="notification_select_all" class="btn btn-primary">Select All</div>
+  	<div id="notification_deselect_all" class="btn btn-primary">Deselect All</div>
+  </div>
+	<div class="row">
+    <div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-body mail">
+					
+					<% @notifications_unread.limit(20).each do |n| %>
+						<% if n.read %>
+						<div class="mail-item">
+						<% else %>
+						<div class="mail-item mail-unread mail-primary">
+						<% end %>
+						 	<div class="mail-checkbox">
+						 		<%= check_box_tag "notification_ids[]", n.id, false,class: "icheckbox" %>
+		          </div>
+		          <div class="mail-user"><%= Employee.find(n.from_id).full_name %></div>
+		          <a href="<%= n.get_target_url %>" class="mail-text"><%= n.get_message %></a>
+		          <div class="mail-date"><%= l n.created_at %></div>
+						</div>
+					<% end %>
+
+					<% @notifications_read.limit(20).each do |n| %>
+						<% if n.read %>
+						<div class="mail-item">
+						<% else %>
+						<div class="mail-item mail-unread mail-primary">
+						<% end %>
+						 	<div class="mail-checkbox">
+						 		<%= check_box_tag "notification_ids[]", n.id, false,class: "icheckbox" %>
+		          </div>
+		          <div class="mail-user"><%= Employee.find(n.from_id).full_name %></div>
+		          <a href="<%= n.get_target_url %>" class="mail-text"><%= n.get_message %></a>
+		          <div class="mail-date"><%= l n.created_at %></div>
+						</div>
+					<% end %>
+
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<% end %>
+</div>

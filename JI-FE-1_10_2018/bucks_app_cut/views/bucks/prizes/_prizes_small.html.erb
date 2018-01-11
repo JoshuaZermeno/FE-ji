@@ -1,0 +1,44 @@
+<% if @inventories.blank? %>
+	<p>None</p>
+<% else %>
+<div class="table-responsive">
+	<table class = 'table table-condensed table-bordered table-hover' id = 'table-prizes-small'>
+		<thead>
+			<th>ID</th>
+			<th>Prize ID</th>
+			<th><%= prize_sortable "name", "Name" %></th>
+			<th>Detail</th>
+			<th>Size</th>
+			<th>Color</th>
+			<th>Stock</th>
+			<th><%= prize_sortable "price", "Price" %></th>
+			
+			<th>Must Reserve</th>
+		</thead>
+		<tbody>
+		<% @inventories.each do |p|  
+			@prize = Bucks::Prize.find(p.prize_id) %>
+			<% if p.in_store_only? %>
+				<tr class="tr-clickable info">
+			<% elsif p.stock <= 0 && !@prize.must_order %>
+				<tr class="tr-clickable danger">
+			<% elsif !p.available? && p.stock > 0 %>
+				<tr class="tr-clickable warning">
+			<% else %>
+				<tr class="tr-clickable success">
+			<% end %>
+				<td> <%= p.id %> </td>
+				<td> <%= p.prize_id %> </td>
+				<td> <%= p.name %> </td>
+				<td> <%= p.details %> </td>
+				<td> <%= p.size %> </td>
+				<td> <%= p.color %> </td>
+				<td> <%= p.stock %> </td>
+				<td> $<%= p.price %> </td>
+				<td> <%= ("<span class='fa fa-check'></span>").html_safe if @prize.must_order %> </td>
+			</tr>
+		<% end %>
+		</tbody>
+	</table>
+</div>
+<% end %>

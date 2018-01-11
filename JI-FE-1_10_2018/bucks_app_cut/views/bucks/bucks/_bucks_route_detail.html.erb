@@ -1,0 +1,45 @@
+<% if @bucks.blank? %>
+	<p>None</p>
+<% else %>
+    <div class="table-responsive">
+      <table class="table table-striped" id="bucks_data_table">
+        <thead>
+	        <tr>
+            <th><%= buck_sortable "number" %></th>
+            <th><%= buck_sortable "employee_id" %></th>
+            <th>Employee Name</th>
+            <th>Department</th>
+            <th><%= buck_sortable "value" %></th>
+            <th>Issuer</th>
+            <th>Bucket</th>
+            <th><%= buck_sortable "status" %></th>
+            <th><%= buck_sortable "approved" %></th>
+            <% if @current_user.has_admin_access %>
+              <th>Admin</th>
+            <% end %>
+		      </tr>
+        </thead>
+        <tbody>
+            <%
+              @bucks = @bucks.reverse if params[:direction] == "desc"
+              @bucks.each do |b|
+              @assignedTo = Employee.find(b.employee_id)
+              @assignedBy = Employee.find(b.issuer_id) %>
+            <tr onclick=" window.document.location = '<%= buck_path(b) %>'; ">
+              <td> <%= b.number %> </td>
+              <td> <%= b.employee_id %> </td>
+              <td> <%= @assignedTo.first_name + " " + @assignedTo.last_name %> </td>
+              <td> <%= Department.find(@assignedTo.department).name %> </td>
+              <td> <%= b.value %> </td>
+              <td> <%= @assignedBy.first_name + " " + @assignedBy.last_name %> </td>
+              <td> <%= Bucks::Bucket.find(b.bucket_id).name %> </td>
+              <td> <%= b.status %> </td>
+              <td> <%= l b.approved_at.localtime if !b.approved_at.nil? %></td>
+              <% if @current_user.has_admin_access %>
+              <td> <%= link_to 'Void', { controller: :bucks, action: :delete, id: b} %> </td>
+              <% end %>
+            </tr>
+            <% end %>
+        </tbody>
+	</table>
+<% end %>

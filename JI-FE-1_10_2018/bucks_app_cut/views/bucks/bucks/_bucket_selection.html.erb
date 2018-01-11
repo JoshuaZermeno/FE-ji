@@ -1,0 +1,58 @@
+<div class="col-xs-12 col-lg-3">
+      <div class="panel panel-default">
+    <div class="panel-body">
+      <h3>Buck Information</h3>
+
+        <% if @current_user.can_issue_special_bucks %>
+          <p><label for = "buck_bucket">Earned for</label>:
+          <%= select_tag 'bucket_name', options_for_select(Bucket.order(:name).to_a.map(&:name)), class: 'form-control' %></p>
+        <% else %>
+          <p><label for = "buck_bucket">Earned for</label>:
+          <%= select_tag 'bucket_name', options_for_select(Bucket.order(:name).to_a.map(&:name), Bucket.order(:name).to_a.map(&:name)), class: 'form-control' %></p>
+        <% end %>
+
+        <% if @current_user.can_approve_bucks  && !@bucket.nil?%>
+          <p><label for = "buck_value">Buck Value</label>:
+          <%= text_field 'buck', 'value', value: @bucket.value, :readonly => true, class: 'form-control'  %>
+        <% else %>
+          <p><label for = "buck_value">Buck Value</label>:
+          <%= text_field 'buck', 'value', value: 0,:readonly => false, class: 'form-control'  %>
+        <% end %>
+        </p>
+    </div>
+  </div>
+</div>
+<div class="col-xs-12 col-lg-3" id='reason_long_holder' style="display: none;">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h3 for = "buck_reason_long">Reason Earned</h3>
+      <p><a class = "list-expand" onclick="toggle_reasons();" id = "toggle_reasons">+Common Reasons</a></p>
+
+      <%= text_area_tag 'buck[reason_long]', nil, size: "32x6", id: 'reason_long', onkeyup: "updateLength()", class: 'form-control' %>
+
+      <div id = 'reason_long_options' style="display: none;">
+        <ul class = "list-group border-bottom">
+          <li class="list-group-item" onclick="updateReasonValue(this);">Preventing or identifying a VEP on property</li>
+          <li class="list-group-item" onclick="updateReasonValue(this);">Notifying proper personnel or taking care of a safety issue</li>
+          <li class="list-group-item" onclick="updateReasonValue(this);">Detecting theft on property</li>
+          <li class="list-group-item" onclick="updateReasonValue(this);">Identifying a minor on property</li>
+          <li class="list-group-item" onclick="updateReasonValue(this);">Identifying a fake ID being used</li>
+          <li class="list-group-item" onclick="updateReasonValue(this);">Detecting counterfeit money</li>
+        </ul>
+      </div>
+
+      <p class = "form-note" id = "text_length">0/250 characters max</p>
+    </div>
+  </div>
+</div>
+<div class="col-xs-12 col-lg-3" id='date_holder' style="display: none;">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h3 for = "buck_reason_long">Date Performed</h3>
+      <p>Date the action was performed</p>
+
+      <%= text_field 'buck', 'performed_at', class: 'form-control datepicker' %>
+
+    </div>
+  </div>
+</div>

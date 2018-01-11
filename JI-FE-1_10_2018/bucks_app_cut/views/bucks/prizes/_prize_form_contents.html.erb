@@ -1,0 +1,30 @@
+<p><label for = "prize_name">Item Name</label>:<br>
+<%= f.text_field :name, id: 'prize_name', class: 'form-control' %></p>
+
+<p><label for = "prize_price">Price</label>:<br>
+<%= f.text_field :price, id: 'prize_price', class: 'form-control' %></p>
+
+<p><label for = "prize_price">Category</label>:<br>
+<%= f.select(:category, options_for_select(get_categories), class: 'form-control') %>
+
+<p><label for = "prize_image">Upload New Image</label>:<br>
+<%= f.file_field :image, class: 'form-control' %></p>
+
+<p><%= label_tag('available', "Available: ") %>
+<%= f.check_box :available, {}, 'true', 'false' %></p>
+
+<p><%= label_tag('must_reserve', "Must be reserved and ordered?") %>
+<%= f.check_box :must_order, {}, 'true', 'false' %></p>
+
+<p><%= label_tag('featured', "Featured item: ") %>
+<%= f.check_box :featured, {}, 'true', 'false' %></p>
+
+<p><label for = "prize_description">Description</label>:<br>
+
+<% if @prize.nil? %>
+<%= f.text_area :description, size: "32x6", class: 'form-control' %>
+<% else %>
+<%= f.text_area :description, size: "32x6", class: 'form-control' %>
+<% end %>
+
+<p class = "form-note">250 characters max</p>

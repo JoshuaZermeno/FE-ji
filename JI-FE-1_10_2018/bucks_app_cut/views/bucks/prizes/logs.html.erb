@@ -1,0 +1,90 @@
+<% content_for :title, "Store Logs" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>  
+    <li><a href="/prizes">Store</a></li>
+    <li>Logs</li>              
+</ul>
+<!-- END BREADCRUMB -->  
+
+<!-- START TITLE -->
+<div class="page-title">                    
+    <h2><span class="fa fa-pencil-square-o"></span> Store Logs</h2>
+</div>
+<!-- END TITLE -->
+
+<div class="page-content-wrap">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <%= form_tag (''), :method => 'get', :id => 'employee_search' do %>
+              <div class="col-md-3">
+                <%= text_field_tag :customer_id, params[:customer_id], placeholder: 'Customer ID', class: "form-control" %>
+              </div>
+              <div class="col-md-3">
+                <%= text_field_tag :cashier_id, params[:cashier_id], placeholder: 'Cashier ID', class: "form-control" %>
+              </div>
+              <div class="col-md-3">
+                <%= text_field_tag :purchase_id, params[:purchase_id], placeholder: 'Purchase #', class: "form-control" %>
+              </div>
+              <div class="col-md-3">
+                <%= submit_tag 'Search', id: 'store_search', class: "btn btn-primary" %>
+                <%= link_to 'Recent 25', {controller: :prizes, action: :logs, recent: 25}, class: 'btn btn-primary' %>
+              </div> 
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default panel-body">
+        <% if @store_logs.blank? %>
+          <p>There is no store log information to show. Use the fields given to search for a logged transaction.</p>
+        <% else %>
+          <div class="table-responsive">
+          <table class = 'table-condensed table-striped table-bordered'>
+            <thead>
+              <th>Employee</th>
+              <th>Employee Name</th>
+              <th>Cashier</th>
+              <th>Cashier Name</th>
+              <th>Transaction</th>
+              <th>Prize</th>
+              <th>Purchase #</th>
+              <th>Stock Before</th>
+              <th>Stock After</th>
+              <th>Time</th>
+            </thead>
+            <tbody>
+              <% @store_logs.each do |l|
+                @employee = Employee.find(l.employee_id)
+                @cashier = Employee.find(l.cashier_id)
+                @prize = Bucks::Prize.find(l.prize_id)
+              %>
+              <tr>
+                <td> <%= @employee.id %> </td>
+                <td> <%= @employee.first_name + " " + @employee.last_name %> </td>
+                <td> <%= @cashier.id %> </td>
+                <td> <%= @cashier.first_name + " " + @cashier.last_name %> </td>
+                <td> <%= l.trans %> </td>
+                <td> <%= @prize.name %> </td>
+                <td> <%= l.purchase_id %> </td>
+                <td> <%= l.stock_before %> </td>
+                <td> <%= l.stock_after %> </td>
+                <td> <%= l.created_at %> </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

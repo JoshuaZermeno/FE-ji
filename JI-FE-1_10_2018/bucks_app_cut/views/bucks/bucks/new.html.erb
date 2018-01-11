@@ -1,0 +1,41 @@
+<% content_for :title, "New Buck" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>  
+    <li><a href="/bucks">Bucks</a></li>
+    <li>New</li>                  
+</ul>
+<!-- END BREADCRUMB -->  
+
+<!-- START TITLE -->
+<div class="page-title">                    
+    <h2><span class="fa fa-plus-circle"></span> Issue Buck</h2>
+</div>
+<!-- END TITLE -->
+
+<div class="page-content-wrap">
+
+<div id='new_buck_layout'>
+  <%= render 'buck_form' %>
+</div>
+  
+  <% if @employees.blank? %>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Search for an employee using the given fields.</h3>
+      </div>
+    </div>
+  <% else %>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Select an employee from below:</h3>
+        <div class="panel panel-default">
+          <div class="panel-body" id='employees_table'>
+            <%= render 'bucks/employees/employees_small' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

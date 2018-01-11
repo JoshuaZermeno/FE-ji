@@ -1,0 +1,82 @@
+<% content_for :title, "Shop" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>    
+    <li><a href="/prizes">Store</a></li>                  
+</ul>
+<!-- END BREADCRUMB -->  
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+
+  <div class="row">
+
+    <div class="col-md-9">
+      <div class="panel panel-default panel-body">
+        <div class = "shop_banner">
+          <img src="/images/bucks_shop_logo.png" class = "shop-banner-logo">
+        </div>
+
+
+
+        <div class = "featured-wrapper">
+          <h1>Spotlight Prizes</h1>
+          <%= render 'prizes_featured' %>
+
+        </div>
+
+        <h1>Available Prizes</h1>
+          <%= render 'prizes_grid' %>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+    
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Filter</h3><ul class="list-tags">
+          <% @filters.each do |f| %>
+          	<% if f[1] != "" %>
+            	<li><a href="#"><span class="fa fa-tag"></span><%= f[1] %></a></li>
+          	<% end %>
+          <% end %>
+        </ul>
+        </div>
+        <div class="panel-body">
+        <%= form_tag (''), :method => 'get', :id => 'prize_search' do %>
+          <%= text_field_tag :name, params[:name], class: 'form-control', placeholder: 'Name' %><br/>
+          <%= select_tag :color, options_for_select(Bucks::Inventory::COLORS), include_blank: "Color", class: 'form-control' %><br/>
+          <%= select_tag :size, options_for_select(Bucks::Inventory::SIZES), include_blank: "Size", class: 'form-control' %>
+            <br/>
+            <div class="list-group border-bottom">
+            	<% Bucks::Prize::CATEGORIES.each do |c| %>
+            			<% if c == params[:category] %>
+              			<%= link_to prizes_path(name: params[:name], color: params[:color], size: params[:size], category: c), class: "list-group-item active"  do %>
+              			<%= c %><span class="badge badge-primary"><%= @prizes.where(category: c).count %></span>
+              			<% end %>
+              		<% else %>
+              			<%= link_to prizes_path(name: params[:name], color: params[:color], size: params[:size], category: c), class: "list-group-item"  do %>
+              			<%= c %><span class="badge badge-primary"><%= @prizes.where(category: c).count %></span>
+              			<% end %>
+              		<% end %>
+              <% end %>
+          	</div>  
+          	<br/>
+          	<%= submit_tag 'Filter', remote: true, id: 'search_prize_button', class: 'btn btn-primary' %>
+            <%= link_to prizes_path(balance: @current_user.get_bucks_balance) do %>
+              <div class="btn btn-primary">What Can I Get Now?</div>
+            <% end %>
+            <%= link_to 'Reset', :prizes, class: 'btn btn-primary' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    
+    </div>
+  </div>
+</div>
+        
+
+

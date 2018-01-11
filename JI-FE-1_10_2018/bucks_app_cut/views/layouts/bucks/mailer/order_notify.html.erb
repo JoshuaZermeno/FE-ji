@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+	<p>A new order has been placed:</p><br/>
+
+	Employee: <b><%= @user.full_name %></b><br/>
+	ID#: <b><%= @user.IDnum %></b><br/><br/>
+
+	Prize: <%= @prize.name %><br/>
+	Details: <%= @inventory.details %><br/>
+	Size: <%= @inventory.size %><br/>
+	Color: <%= @inventory.color %><br/><br/>
+	Quantity: <%= @quantity %><br/><br/>
+	Date: <%= @date if @date != "" %><br/><br/>
+</body>
+</html>

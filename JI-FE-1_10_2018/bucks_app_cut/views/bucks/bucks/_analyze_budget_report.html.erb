@@ -1,0 +1,81 @@
+<div class="row">
+	<div class="col-md-4">
+		<div class="panel panel-default panel-body">
+		<div class="table-responsive">
+			<table class="table table-condensed">
+				<tr>
+					<td>Department Budget: </td>
+					<td> <%= @department_budget %> </td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Department Budget Used: </td>
+					<td> <%= @bucks_issued.count %> / <%= @department.bucks_budget %> 
+						<span class = <%= p_class_for_budget(@bucks_issued.count, @department.bucks_budget)%>> (<%= ((@bucks_issued.count.to_f / @department.bucks_budget.to_f) * 100).round(2) %>%)</span></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Budget Per Employee: </td>
+						<td> <%= @budget_per_employee %> </td>
+						<td></td>
+					</tr>
+					<tr><td><b>Buckets</b></td>
+						<td><b>Issued</b></td>
+						<td><b>Earned</b></td>
+					</tr>
+					<% @buckets.each do |b| %>
+						<tr>
+							<td> <%= b.name %> </td>
+							<td> <%= @bucks_issued.where(bucket_id: b.id).count %> </td>
+							<td> <%= @bucks_earned.where(bucket_id: b.id).count %> </td>
+						</tr>
+					<% end %>
+					<tr>
+						<td> <u>Total</u></td>
+						<td> <%= @bucks_issued.count %> ($<%= @bucks_issued.sum(:original_value) %>)</td>
+						<td> <%= @bucks_earned.count %> ($<%= @bucks_earned.sum(:original_value) %>)</td>
+					</tr>
+					<tr><td colspan="3"><b>Issued Internal vs. External</b></td></td></tr>
+					<% @internal = @bucks_issued.where('employees.department_id = bucks_bucks.department_id')
+							@external = @bucks_issued.where('employees.department_id <> bucks_bucks.department_id') 
+							@internal_percent = ((@internal.count.to_f / @bucks_issued.count.to_f) * 100).round(2)
+							@external_percent = ((@external.count.to_f / @bucks_issued.count.to_f) * 100).round(2) %>
+					<tr>
+						<td> Issued Internal</td>
+						<td> <%= @internal.count %></td>
+						<td> <span class = <%= p_class_for_budget(@bucks_issued.count, @internal.count)%>> <%= @internal_percent.nan? ? 0 : @internal_percent %>%</span> </td>
+					</tr>
+					<tr>
+						<td> Issued External</td>
+						<td> <%= @external.count %> </td>
+						<td>  <span class = <%= p_class_for_budget(@bucks_issued.count, @external.count)%>> <%= @external_percent.nan? ? 0 : @external_percent %>%</span> </td>
+					</tr>
+					<tr><td><b>Earnings</b></td><td></td><td></td></tr>
+					<% @internal = @bucks_earned.where('employees.department_id = bucks_bucks.department_id')
+							@external = @bucks_earned.where('employees.department_id <> bucks_bucks.department_id') 
+							@internal_percent = ((@internal.count.to_f / @bucks_earned.count.to_f) * 100).round(2)
+							@external_percent = ((@external.count.to_f / @bucks_earned.count.to_f) * 100).round(2) %>
+					<tr>
+						<td> Average Earned per Employee</td>
+						<td> <%= (@bucks_earned.count.to_f / @earners.length.to_f).round(3) %> </td>
+						<td> </td>
+					</tr>
+					<tr>
+						<td> Earned Average Value</td>
+						<td> $<%= (@bucks_earned.sum(:original_value).to_f / @earners.length.to_f).round(3) %> </td>
+						<td> </td>
+					</tr>
+					<tr><td></td><td></td><td></td></tr>
+					</table>
+				</div>
+			</div>
+			</div>
+			<div class="col-md-4">
+				<svg id="issued_pie_chart" height="450px"></svg>
+			</div>
+			<div class="col-md-4">
+				<svg id="earned_pie_chart" height="450px"></svg>
+			</div>
+		</div>
+
+		

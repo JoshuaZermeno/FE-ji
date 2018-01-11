@@ -1,0 +1,34 @@
+<h1>All Employees</h1>
+
+<div class = "table-search-input" id = "table_search_input_employee">
+ <%= form_tag (''), :method => 'get', :placeholder => 'Search', :id => 'employee_search' do %>
+    <%= text_field_tag :search, params[:search] %>
+<% end %>
+</div>
+
+<div class = "table-wrapper">
+	<div id = "employees_table">
+		<% if @employees.blank? %>
+			<p>There is no employee information to show.</p>
+		<% else %>
+			<table class = 'table-list'>
+				<tr class = "tr-list-head" >
+					<td class = "td-list">ID</td>
+					<td class = "td-list">Name</td>
+					<td class = "td-list">Role</td>
+					<td class = "td-list">Department</td>
+					<td class = "td-list">Earned This Month</td>
+				</tr>
+				<% @employees.each do |e| %>
+					<tr class = "tr-list">
+						<td class = "td-list"> <%= e[0] %> </td>
+						<td class = "td-list"> <%= e[1] %> </td>
+						<td class = "td-list"> <%= e[2] %> </td>
+						<td class = "td-list"> <%= e[5] %> </td>
+						<td class = "td-list"> <%= e[6] %> </td>
+					</tr>
+				<% end %>
+			</table>
+		<% end %>
+	</div>
+</div>

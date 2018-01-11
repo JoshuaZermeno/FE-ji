@@ -1,0 +1,30 @@
+<% content_for :title, "Pending Bucks" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="/bucks">Bucks</a></li>
+    <li>Pending Approval</li>               
+</ul>
+<!-- END BREADCRUMB -->  
+
+<!-- START TITLE -->
+<div class="page-title">                    
+    <h2><span class="fa fa-clock-o"></span> Bucks Requiring Your Approval</h2>
+</div>
+<!-- END TITLE -->
+
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default panel-body">
+        <div id = "bucks_table">
+          <%= render 'bucks_pending' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

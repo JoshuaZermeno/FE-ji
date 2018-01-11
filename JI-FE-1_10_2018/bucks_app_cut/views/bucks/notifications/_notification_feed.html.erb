@@ -1,0 +1,20 @@
+<div class="panel-heading">
+    <h3 class="panel-title"><span class="fa fa-comments"></span> Notifications</h3>                                
+    <div class="pull-right">
+        <span class="label label-primary"><%= @current_user.get_unread_notification_count %> new</span>
+    </div>
+</div>
+<div class="panel-body list-group list-group-contacts scroll" style="height: 200px;">
+    <% @current_user.get_unread_notifications.limit(5).each do |n| %>
+        <a href="<%= n.get_target_url %>" class="list-group-item">
+            <!-- <div class="list-group-status status-online"></div> -->
+            <%= image_tag get_profile_picture(n.from_id), class: "pull-left" %>
+            <span class="contacts-title"><%= ::Employee.find(n.from_id).full_name %></span>
+            <p style="overflow-x: hidden;"><%= n.get_message %></p>
+            <p class="notification_time"><%= n.created_at.strftime("%m/%d/%Y %I:%M%p") %></p>
+        </a>
+    <% end %>
+</div>     
+<div class="panel-footer text-center">
+    <a href="/bucks/notifications">Show All Notifications</a>
+</div>           

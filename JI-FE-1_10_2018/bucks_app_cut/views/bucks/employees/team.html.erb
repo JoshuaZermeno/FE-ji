@@ -1,0 +1,88 @@
+<% content_for :title, "Your Dept" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+  <li><a href="/">Home</a></li>  
+  <li>Departments</li>
+  <li><%= @department.name %></li>                  
+</ul>
+<!-- END BREADCRUMB -->  
+
+<!-- START TITLE -->
+<div class="page-title">                    
+  <h2><span class="fa fa-users"></span> Your Team: <%= @department.name %></h2>
+</div>
+
+<!-- END TITLE -->
+<div class="page-content-wrap">
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <%= form_tag (''), :method => 'get', :id => 'department_filter' do %>
+            <div class="col-md-3">
+              <%= select_tag :month, options_for_select(@months), include_blank: "Month", class: "form-control" %>
+            </div>
+            <div class="col-md-3">
+              <%= select_tag :year, options_for_select(@years), include_blank: "Year", class: "form-control" %>
+            </div>
+            <div class="col-md-3">
+              <%= submit_tag 'Show', name: 'department_filter_button', id: 'department_filter_button', class: "btn btn-primary" %>
+            </div> 
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+        <% if !@month.nil? && !@year.nil? %>
+        <h2>Budget Report: <%= @department.name %> (<%= @month %>, <%= @year %>)</h2>
+        <% @month_num = Date::MONTHNAMES.index(@month) %>
+        <%= render 'bucks/bucks/analyze_budget_report' %>
+        <% end %>
+      </div>
+  </div>
+
+  <div class="page-title">                    
+    <h2><span class="fa fa-check"></span> <%= @department.name %> Issuings</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default panel-body">
+        <%= render 'bucks/bucks/analyze_issued_list' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-title">                    
+    <h2><span class="fa fa-usd"></span> <%= @department.name %> Earnings</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default panel-body">
+        <%= render 'bucks/bucks/analyze_earned_list' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-title">                    
+    <h2><span class="fa fa-usd"></span> <%= @department.name %> Overall</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default panel-body">
+        <div id = "employees_table">
+          <%= render 'employees_route_detail' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

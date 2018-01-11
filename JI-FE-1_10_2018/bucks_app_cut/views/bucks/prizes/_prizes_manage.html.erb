@@ -1,0 +1,34 @@
+<% if @prizes.blank? %>
+	<p>None</p>
+<% else %>
+<div class="table-responsive">
+	<table class = 'table table-striped table-condensed' id = 'table-prizes-small'>
+		<thead>
+			<th>ID</th>
+			<th><%= prize_sortable "name", "Name" %></th>
+			<th>Category</th>
+			<th>Stock</th>
+			<th>Sold</th>
+			<th>Reserve</th>
+			<th>Available</th>
+			<th>Featured</th>
+			<th>Manage</th>
+		</thead>
+		<tbody>
+			<% @prizes.each do |p|  %>
+			<tr>
+				<td> <%= p.id %> </td>
+				<td> <%= p.name %> </td>
+				<td> <%= p.category %> </td>
+				<td> <%= p.get_total_stock %> </td>
+				<td> <%= p.sold_count %> </td>
+				<td class="centered"> <%= ("<span class='fa fa-check'></span>").html_safe if p.must_order %> </td>
+				<td class="centered"> <%= ("<span class='fa fa-check'></span>").html_safe if p.available %> </td>
+				<td class="centered"> <%= ("<span class='fa fa-check'></span>").html_safe if p.featured %> </td>
+				<td> <%= link_to 'Stock', controller: :inventories, action: :manage, id: p.id %> | <%= link_to 'Edit', { action: :edit, id: p} %> </td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+	</div>
+<% end %>

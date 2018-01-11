@@ -1,0 +1,100 @@
+<% content_for :title, "Buck Logs" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>  
+    <li><a href="/bucks">Bucks</a></li>
+    <li>Logs</li>              
+</ul>
+<!-- END BREADCRUMB -->  
+
+<!-- START TITLE -->
+<div class="page-title">                    
+    <h2><span class="fa fa-pencil-square-o"></span> Buck Logs</h2>
+</div>
+<!-- END TITLE -->
+
+<div class="page-content-wrap">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <%= form_tag (''), :method => 'get', :id => 'buck_search' do %>
+              <div class="col-md-3">
+                <%= text_field_tag :buck_id, params[:buck_id], placeholder: 'Ticket #', class: "form-control" %>
+              </div>
+              <div class="col-md-3">
+                <%= text_field_tag :received_id, params[:received_id], placeholder: 'Received ID', class: "form-control" %>
+              </div>
+              <div class="col-md-3">
+                <%= text_field_tag :performed_id, params[:performed_id], placeholder: 'Performed ID', class: "form-control" %>
+              </div>
+              <div class="col-md-3">
+                <%= text_field_tag :last, params[:performed_id], placeholder: 'Performed ID', class: "form-control" %>
+              </div>
+              <div class="col-md-3">
+                <%= submit_tag 'Search', id: 'buck_search_button', class: "btn btn-primary" %>
+                <%= link_to 'Recent 25', {controller: :bucks, action: :logs, recent: 25}, class: 'btn btn-primary' %>
+              </div> 
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default panel-body">
+        <% if @buck_logs.blank? %>
+          <p>There is no buck log information to show. Use the fields given to search for a logged transaction.</p>
+        <% else %>
+          <table class = 'table-condensed table-striped table-bordered'>
+            <thead>
+              <th>Buck ID</th>
+              <th>Event</th>
+              <th>Performed</th>
+              <th></th>
+              <th>Recieved</th>
+              <th></th>
+              <th>Status Before</th>
+              <th>Status After</th>
+              <th>Value Before</th>
+              <th>Value After</th>
+              <th>Purchase #</th>
+              <th>Purchased</th>
+              <th>Time</th>
+            </thead>
+            <tbody>
+              <% @buck_logs.each do |l|
+                @performed_id = Employee.find(l.performed_id)
+                @received = Employee.find(l.received_id)
+                if !l.purchase_id.nil?
+                  @prize = Bucks::Prize.find(Bucks::Purchase.find(l.purchase_id).prize_id)
+                end
+                %>
+              <tr>
+                <td> <%= l.buck_id %> </td>
+                <td> <%= l.event %> </td>
+                <td> <%= @performed_id.id %> </td>
+                <td> <%= @performed_id.first_name + " " + @performed_id.last_name %> </td>
+                <td> <%= @received.id %> </td>
+                <td> <%= @received.first_name + " " + @received.last_name %> </td>
+                <td> <%= l.status_before %> </td>
+                <td> <%= l.status_after %> </td>
+                <td> <%= l.value_before %> </td>
+                <td> <%= l.value_after %> </td>
+                <td> <%= l.purchase_id %> </td>
+                <td> <%= @prize.name if !l.purchase_id.nil? %> </td>
+                <td> <%= l.created_at %> </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en" class="body-full-height">
+
+<head>
+    <title><%= (yield(:title) + " | " unless yield(:title).blank?).to_s + "Bucks" %></title>           
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      
+      <link rel="icon" href="favicon.ico" type="image/x-icon" />
+      <!-- END META SECTION -->
+      
+      <!-- LESSCSS INCLUDE -->   
+      <%= stylesheet_link_tag "theme-default", id: "theme", media: "all" %>  
+</head>
+
+<body>
+
+  <%= yield %>
+
+           <!-- START PLUGINS -->
+
+  <%=javascript_include_tag "application", "data-turbolinks-track" => false %>
+  <script type="text/javascript" src="../../javascripts/plugins/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="../../javascripts/plugins/jquery/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="../../javascripts/plugins/bootstrap/bootstrap.min.js"></script>        
+  <!-- END PLUGINS -->
+
+  <!-- START THIS PAGE PLUGINS-->        
+  <script type='text/javascript' src='../../javascripts/plugins/icheck/icheck.min.js'></script>        
+  <script type="text/javascript" src="../../javascripts/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+  <script type="text/javascript" src="../../javascripts/plugins/scrolltotop/scrolltopcontrol.js"></script>
+  
+  <script type="text/javascript" src="../../javascripts/plugins/morris/raphael-min.js"></script>
+  <script type="text/javascript" src="../../javascripts/plugins/morris/morris.min.js"></script>       
+  <script type="text/javascript" src="../../javascripts/plugins/rickshaw/d3.v3.js"></script>
+  <script type="text/javascript" src="../../javascripts/plugins/rickshaw/rickshaw.min.js"></script>
+  <script type='text/javascript' src='../../javascripts/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
+  <script type='text/javascript' src='../../javascripts/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>                
+  <script type='text/javascript' src='../../javascripts/plugins/bootstrap/bootstrap-datepicker.js'></script>                
+  <script type="text/javascript" src="../../javascripts/plugins/owl/owl.carousel.min.js"></script>                 
+  
+  <script type="text/javascript" src="../../javascripts/plugins/moment.min.js"></script>
+  <script type="text/javascript" src="../../javascripts/plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- END THIS PAGE PLUGINS-->        
+
+  <!-- START TEMPLATE -->
+
+  
+  <script type="text/javascript" src="../../javascripts/plugins.js"></script>        
+  <script type="text/javascript" src="../../javascripts/actions.js"></script>
+  
+  <script type="text/javascript" src="../../javascripts/demo_dashboard.js"></script>
+  <!-- END TEMPLATE -->
+</body>
+
+</html>

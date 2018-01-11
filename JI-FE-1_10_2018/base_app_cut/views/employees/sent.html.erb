@@ -1,0 +1,25 @@
+<div class="login-container" id="snow">
+
+  <div class="login-box animated fadeInDown">
+    <div class="login-logo"> <img src="/images/banner_logo.png" id="logo"></div>
+    <div class="login-body">
+      <div class="login-title"><strong>Reset</strong></div>
+      <% if flash[:title] == "Error" %>
+      <div class="alert alert-danger"><%= flash[:notice] %></div>
+      <% elsif flash[:title] == "Success" %>
+      <div class="alert alert-success"><%= flash[:notice] %></div>
+      <% end %>
+        <div class="alert alert-success"></div>
+    </div>
+    <div class="login-footer">
+      <div class="pull-left">
+        &copy; 2016 Penn National Gaming
+      </div>
+      <div class="pull-right">
+        <%= link_to "Login", controller: :sessions, action: :new %> | 
+        <%= link_to "Reset Password", controller: :password_manager, action: :enter %>
+      </div>
+    </div>
+  </div>
+
+</div>

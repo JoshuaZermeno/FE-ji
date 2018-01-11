@@ -1,0 +1,34 @@
+<% content_for :title, "Issued" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>    
+    <li><a href="/bucks/issued">Bucks Issued</a></li>
+    <li>You</li>                  
+</ul>
+<!-- END BREADCRUMB -->
+
+<!-- START TITLE -->
+<div class="page-title">                    
+    <h2><span class="fa fa-book"></span> Bucks Issued</h2>
+</div>
+<!-- END TITLE --> 
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default tabs">
+          <ul class="nav nav-tabs" role="tablist">
+              <a href="?show=you"><li <% if @show == 'you' %>class="active"<% end %>>You</li></a>
+              <a href="?show=department"><li <% if @show == 'department' %>class="active"<% end %>>Department</li></a>
+          </ul>
+
+        <div id="panel-body tab-content">
+          <% if @show == 'you' %>
+            <%= render 'issued_by_me' %>
+          <% elsif @show == 'department'%>
+            <%= render 'issued_by_department' %>
+          <% end %>
+        </div>
+    </div>
+  </div>
+</div>

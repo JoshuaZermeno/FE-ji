@@ -1,0 +1,23 @@
+<div id="homeSlideshowCarousel" class="carousel slide" data-ride="carousel" data-interval="4000">
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <%
+        @num = rand(@slide_images.count)
+        @slide_images.each_with_index do |i, index| 
+        if index == @num %>
+          <div class="item item-350 active"><img src= "<%= i.image.url %>" ></div>
+        <% else %>
+          <div class="item item-350"><img src= "<%= i.image.url %>" ></div>
+    <% end end %>
+    
+    </div>
+
+  <a class="left carousel-control" href="#homeSlideshowCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#homeSlideshowCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>

@@ -1,0 +1,103 @@
+<% content_for :title, "Home" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+  <li><a href="#">Home</a></li>                    
+</ul>
+<!-- END BREADCRUMB -->  
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="widget-home-title">
+        Featured Prizes
+      </div>
+      <!-- START WIDGET SLIDER -->
+      <div class="widget widget-default widget-carousel">
+        <div class="owl-carousel" id="owl-example">
+          <% @featured.each do |f| %>
+            <div>
+              <div class="widget-featured-image">
+                <img src="<%= f.get_first_image %>"" class="img-thumbnail"/>
+              </div>
+              <div class="widget-data">
+                <div class="widget-featured-name"><%= f.name %></div>
+                <div class="widget-featured-price"><%= f.get_total_stock %> in stock</div>
+                <div class="widget-featured-stock">$<%= f.price %></div>
+              </div>
+            </div>
+          <% end %>  
+        </div>                                                    
+      </div>         
+      <!-- END WIDGET SLIDER -->
+
+    </div>
+    <div class="col-md-3">                        
+      <a href="/bucks/prizes" class="tile tile-purple-default tile-valign">
+        <img src="images/bucks_shop_logo.png">
+      </a>                       
+    </div> 
+    <div class="col-md-3">
+      <div class="widget-home-title">
+        Bucks Balance
+      </div>
+      <!-- START WIDGET REGISTRED -->
+      <div class="widget widget-default widget-item-icon">
+        <div class="widget-item-left">
+          <span class="fa fa-usd"></span>
+        </div>
+        <div class="widget-data">
+          <div class="widget-huge-int num-count"><%= @current_user.get_bucks_balance %></div>
+        </div>                          
+      </div>                            
+      <!-- END WIDGET REGISTRED -->
+
+    </div>
+    <div class="col-md-3">
+
+      <!-- START WIDGET CLOCK -->
+      <div class="widget widget-purple widget-padding-sm">
+        <div class="widget-big-int plugin-clock">00:00</div>                            
+        <div class="widget-subtitle plugin-date">Loading...</div>                                                    
+      </div>                        
+      <!-- END WIDGET CLOCK -->
+
+    </div>
+  </div>
+
+  <div class="content-frame">
+    <div class="content-frame-right" style="height: 578px;">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Leaderboards</h3>
+        </div>
+        <div class="panel-body">
+          <%= render 'leaderboards' %>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <%= render 'news_slideshow' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-frame-body content-frame-body-left" style="height: 638px;">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          News and Announcements
+        </h3>
+      </div>
+      <div class="panel-body" >
+        <img src="images/anniversary.jpg" style="width: 100%"/>
+      </div>
+    </div>
+      
+    </div>
+  </div>
+
+</div>          

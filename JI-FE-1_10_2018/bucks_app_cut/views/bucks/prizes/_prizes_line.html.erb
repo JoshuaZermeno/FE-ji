@@ -1,0 +1,15 @@
+<% if @prizes.blank? %>
+	<p>None</p>
+<% else %>
+	<% @prizes.each do |p|  
+		@prize = Prize.find(p.prize_id) %>
+		<div class = "prize-list-container">
+			<div class = "price-tag">$<%= @prize.price %></div>
+			<div class = "prize-content">
+				<p><b><%= @prize.name %></b></p>
+				<p><b>Purchased:</b> <br>
+				<%= p.created_at %></p>
+			</div>
+		</div>
+	<% end %>
+<% end %>

@@ -1,0 +1,144 @@
+<% content_for :title, "Prize #{@prize.id}" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+  <li><a href="/">Home</a></li>  
+  <li><a href="/prizes">Store</a></li>
+  <li><%= @prize.name %></li>                  
+</ul>
+<!-- END BREADCRUMB -->  
+
+<!-- START TITLE -->
+<div class="page-title">                    
+  <h2><span class="fa fa-shopping-cart"></span> View Prize</h2>
+</div>
+<!-- END TITLE -->
+
+<div class="page-content-wrap">
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div id = "prize_image_holder" class = "prize-detail-cell-picture" style="background-image: url('<%= @chosen.image %>')"></div>
+        </div>
+      </div>
+      <div id="variant_images">
+        <% @images.each do |i| 
+          if !i.blank? %>
+          <img src="<%= i %>" class="img-thumbnail" height="50px" width="50px"/>
+          <% end end %>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><%= @prize.name %>
+              <span class="label label-primary">
+                <%= @price_displayed %>
+              </span>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <h3>Description</h3>
+            <p><%= @prize.description.blank? ? "None" : @prize.description %></p>
+            <hr>
+            <h3>Select Type</h3>
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <th>Details</th>
+                    <th>Size</th>
+                    <th>Color</th>
+                    <th>Price</th>
+                  </thead>
+                  <tbody>
+                    <% @inventories.each do |i| %>
+                      <% chosen_id = @chosen.id if !@chosen.nil? %>
+                      <% if i.id == chosen_id %>
+                        <tr class="success tr-clickable">
+                      <% else %>
+                        <tr class="tr-clickable" onclick=" window.document.location = '<%= @prize.id %>?inventory_id=<%= i.id %>&size=<%= i.size %>&details=<%= i.details %>&color=<%= i.color %>'; ">
+                      <% end %>
+                      <td> <%= !i.details.blank? ? i.details : "-" %> </td>
+                      <td> <%= !i.size.blank? ? i.size : "-" %> </td>
+                      <td> <%= !i.color.blank? ? i.color : "-" %> </td>
+                      <td> <%= "$" + i.price.to_s %> </td>
+                    </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+              <% if !@chosen.nil? && @chosen.stock > 0 %>
+                <h3><span class="label label-success"><%= @prize.must_order ? "Must Reserve" : @chosen.stock.to_s + " In Stock" %></span></h3>
+              <% elsif @prize.must_order %>
+                <h3><span class="label label-warning">Must Reserve</span></h3>
+              <% else %>
+                <h3><span class="label label-danger">Out Of Stock</span></h3>
+              <% end %>
+            <% if !@chosen.nil? %>
+              <%= form_tag controller: :purchases, action: :complete do %>
+              <div class="">
+                <p><label for = "quantity">Quantity:</label>
+                  <%= text_field 'prize', 'quantity', value: 1, class: "form-control" %></p>
+                  <div class="btn btn-primary btn-lg" id="btn_inc_qty">+</div>
+                  <div class="btn btn-primary btn-lg" id="btn_dec_qty">-</div>
+              </div>
+              <% if @prize.request_date %>
+              <br/>
+              <p><label for = "date_of_use">Date needed by:</label>
+                <%= text_field 'prize', 'date_of_use', value: "Select Date", class: 'form-control input-group date datepicker', 'data-provide' => 'datepicker', 'data-date-format' => "dd/mm/yyyy" %></p>
+                <% end %>
+                <%= hidden_field :prize, :id, value: @prize.id %>
+                <%= hidden_field :prize, :inventory_id, value: @chosen.id if !@chosen.nil? %>
+                <%= hidden_field :prize, :details, value: @chosen.details if !@chosen.nil? %>
+                <%= hidden_field :prize, :color, value: @chosen.color if !@chosen.nil? %>
+                <%= hidden_field :prize, :size, value: @chosen.size if !@chosen.nil? %>
+                <%= hidden_field :employee, :id, value: @current_user.id %>
+                <%= hidden_field :online, value: true %>
+                <br/>
+
+                <div class="message-box animated fadeIn" id="message-box-default">
+                  <div class="mb-container">
+                    <div class="mb-middle">
+                      <div class="mb-title"><span class="fa fa-warning"></span> Confirm Purchase<% if @chosen.cost > 20 %> - Please Read<% end %></div>
+                      <div class="mb-content">
+                        <p id="popup_message"></p>  <br/>
+                        <% if @chosen.cost > 20 %>
+                        <b><p class="terms-p">The purchase of this prize is subject to State and Federal taxes that will be deducted from your paycheck in the pay period that the prize was purchased. I hereby authorize my employer, <u><%= @property_name %></u>, to make a deduction from my paycheck. In addition, I acknowledge that the full amount of the payroll deduction is due and payable upon termination of my employment (whether voluntary or involuntary). Therefore, I authorize <u><%= @property_name %></u> to deduct from my last paycheck any amounts still owed.</p></b>  
+                        <% end %>           
+                      </div>
+                      <div class="mb-footer">
+                        <button id="store_cancel_button" class="btn btn-danger btn-lg pull-right mb-control-close">Cancel</button>
+                        <%= submit_tag 'Agree & Purchase', class: "btn btn-success btn-lg pull-right" %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <% if !@chosen.nil? && (@chosen.stock > 0 || @prize.must_order) %>
+                <div id="store_purchase_button" class="btn btn-primary">Purchase</div>
+                <% end %>
+                <% if Bucks::Favorite.find_by(employee_id: @current_user.IDnum, inventory_id: @chosen.id).blank? %>
+                  <%= link_to controller: :favorites, action: :create, inventory_id: @chosen.id do %>
+                    <div class = "btn btn-primary">Add Selection to Favorites</div>
+                  <% end 
+                else %>
+                <%= link_to controller: :favorites, action: :delete, inventory_id: @chosen_id, source: 'shop' do %>
+                  <div class = "btn btn-primary">Remove Selection from Favorites</div>
+                <% end 
+                end %>
+
+                <%= link_to "Back to Store", {controller: :prizes, action: :index}, class: "btn btn-primary" %>
+
+                <% end end %>
+
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

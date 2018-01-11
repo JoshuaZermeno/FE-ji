@@ -1,0 +1,19 @@
+<% if @prizes.blank? %>
+	<p>None</p>
+<% else %>
+	<% @prizes.each do |p| %>
+		<div class = "prize-list-container">
+			<div class = "price-tag">$<%= p.price %> Bucks</div>
+			<div class = "prize-content">
+				<p><b><%= p.name %></b></p>
+				
+				<p>In Stock: <%= p.stock %></p>
+			</div>
+			<div class = "prize-options">
+				<% if @current_user.has_admin_access %>
+					<%= link_to 'Edit', { action: :edit, id: p} %> | <%= link_to 'Delete', { controller: :prizes, action: :destroy, id: p.id} %>
+				<% end %>
+			</div>
+		</div>
+	<% end %>
+<% end %>

@@ -1,0 +1,47 @@
+<!-- START FLASH -->                     
+<% if flash[:title] == "Error" %>
+<div class="alert alert-danger"><%= flash[:notice] %><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button></div>
+<% elsif flash[:title] == "Success" %>
+<div class="alert alert-success"><%= flash[:notice] %><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button></div>
+<% end %>
+<!-- END FLASH -->
+
+<div class="login-container">
+
+  <div class="login-box animated fadeInDown">
+    <div class="login-logo"> <img src="/images/banner_logo.png" id="logo"></div>
+    <div class="login-body">
+      <div class="login-title"><strong>Update</strong></div>
+      <%= form_tag '', :action => 'update', class: 'form-horizontal' do %>
+      <div class="form-group">
+        <div class="col-md-12">
+          <%= password_field :change, :new1, class: 'form-control', placeholder: "New Password" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-12">
+          <%= password_field :change, :new2, class: 'form-control', placeholder: "Re-type Password" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
+          <button class="btn btn-primary btn-block">Change Password</button>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <div class="login-footer">
+      <div class="pull-left">
+        &copy; 2016 Penn National Gaming
+      </div>
+      <div class="pull-right">
+        <%= link_to "Login", controller: :sessions, action: :new %> | 
+        <%= link_to "Reset Password", controller: :password_manager, action: :enter %>
+      </div>
+    </div>
+  </div>
+
+</div>
+    

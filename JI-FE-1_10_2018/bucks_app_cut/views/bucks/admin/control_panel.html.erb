@@ -1,0 +1,166 @@
+<% content_for :title, "Control Panel" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li>Control Panel</li> 
+  <li><%= Property.find(session[:property]).name %></li>            
+</ul>
+<!-- END BREADCRUMB --> 
+
+<!-- START TITLE -->
+<div class="page-title">                    
+  <h2><span class="fa fa-gears"></span> Control Panel - <%= Property.find(session[:property]).name %></h2>
+</div>
+<!-- END TITLE -->
+
+<div class="page-content-wrap">
+
+<div class="row">
+    <div class="col-md-12">
+
+      <div class="form-horizontal">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Edit Settings</h3>
+          </div>
+          <div class="panel-body form-group-separated">
+
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12 control-label">Swipe Login Timeout</label>
+              <div class="col-md-1 col-xs-2">  
+            <%= form_tag :action => 'update', class: 'form-control' do %>                                          
+                <div class="input-group">
+                  <%= text_field 'timeout', 'swipe_value', class: 'form-control' %>
+                </div>
+              </div>
+              <div class="col-md-3 col-xs-12">                                            
+                <div class="input-group">
+                  <%= select_tag 'timeout[swipe_unit]', options_for_select([
+                    ['Minutes'],
+                    ['Hours'],
+                    ['Days']]), class: 'form-control' %>
+                  </div>                                            
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 col-xs-12 control-label">Traditional Login Timeout</label>
+                <div class="col-md-1 col-xs-2">                                            
+                  <div class="input-group">
+                    <%= text_field 'timeout', 'traditional_value', class: 'form-control' %>
+                  </div>
+                </div>
+                <div class="col-md-3 col-xs-12">                                            
+                  <div class="input-group">
+                    <%= select_tag 'timeout[traditional_unit]', options_for_select([
+                      ['Minutes'],
+                      ['Hours'],
+                      ['Days']]), class: 'form-control' %>
+                  </div>                                            
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 col-xs-12 control-label">Special User Timeout</label>
+                <div class="col-md-1 col-xs-2">                                            
+                  <div class="input-group">
+                    <%= text_field 'timeout', 'special_value', class: 'form-control' %>
+                  </div>
+                </div>
+                <div class="col-md-3 col-xs-12">                                            
+                  <div class="input-group">
+                    <%= select_tag 'timeout[special_unit]', options_for_select([
+                      ['Minutes'],
+                      ['Hours'],
+                      ['Days']]), class: 'form-control' %>
+                  </div>                                            
+                </div>
+              </div>
+
+            </div>
+            <div class="panel-footer">                                  
+              <%= submit_tag 'Save', class: 'btn btn-primary' %>
+            </div>
+            <% end %>
+          </div>
+        </div>
+        
+      </div>
+    </div>           
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <div class="form-horizontal">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Other Controls</h3>
+          </div>
+          <div class="panel-body form-group-separated">
+
+              <div class="form-group">
+                <label class="col-md-3 col-xs-12 control-label">Departments</label>
+                <div class="col-md-6 col-xs-12">                                                                                                                                        
+                  <%= link_to "Manage Departments", { controller: :departments, action: :edit}, class: 'btn btn-primary' %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 col-xs-12 control-label">Permissions</label>
+                <div class="col-md-6 col-xs-12">                                                                                                                                        
+                  <%= link_to "Manage Permissions", { controller: :jobs, action: :permissions}, class: 'btn btn-primary' %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 col-xs-12 control-label">Import Employees</label>
+                <div class="col-md-6 col-xs-12">                                                                                                                                        
+                  <%= link_to "Import", { controller: :employees, action: :import}, class: 'btn btn-primary' %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 col-xs-12 control-label">Buckets</label>
+                <div class="col-md-6 col-xs-12">                                                                                                                                        
+                  <%= link_to "Manage Buckets", { controller: :buckets, action: :index}, class: 'btn btn-primary' %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 col-xs-12 control-label">Slideshow</label>
+                <div class="col-md-6 col-xs-12">                                                                                                                                        
+                  <%= link_to "Edit Slideshow", { controller: :admin, action: :slideshow}, class: 'btn btn-primary' %>
+                </div>
+              </div>
+
+              <div class="form-group">                                        
+                <label class="col-md-3 col-xs-12 control-label">Reset Employee Password</label>
+                <div class="col-md-6 col-xs-12">
+                  <div class="input-group">
+                    <%= form_tag :action => 'password_reset', class: 'form-control' do %>
+
+                    <p><label for = "">Employee ID#:</label>
+                      <%= text_field :change, :employee_id, class: 'form-control' %></p>
+
+                    <p><label for = "">New Password:</label>
+                      <%= password_field :change, :new1, class: 'form-control' %></p>
+
+                    <p><label for = "">Retype Password:</label>
+                      <%= password_field :change, :new2, class: 'form-control' %></p>
+                      <br/><br/>
+                      <%= submit_tag 'Reset', class: 'btn btn-primary' %>
+                     <% end %>
+                  </div>            
+                </div>
+              </div>
+            </div>
+            <div class="panel-footer">                                  
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>                    
+
+  </div>

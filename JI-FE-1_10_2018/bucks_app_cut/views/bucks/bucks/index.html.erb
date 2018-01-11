@@ -1,0 +1,53 @@
+<% content_for :title, "All Bucks" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="/bucks">Bucks</a></li>
+    <li>All</li>               
+</ul>
+<!-- END BREADCRUMB --> 
+
+<!-- START TITLE -->
+<div class="page-title">                    
+    <h2><span class="fa fa-money"></span> All Bucks</h2>
+</div>
+<!-- END TITLE -->
+
+<div class="page-content-wrap">
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <%= form_tag (''), :method => 'get', :id => 'buck_search', :params => params do %>
+              <div class="col-md-3">
+                <%= text_field_tag :search_id, params[:search_id], placeholder: "ID", class: 'form-control' %>
+              </div>
+              <div class="col-md-3">
+                <%= text_field_tag :search_recipient_id, params[:search_recipient_id], value: params[:search_recipient_id], placeholder: 'Recipient ID', class: 'form-control' %>
+              </div>
+              <div class="col-md-3">
+                <%= text_field_tag :search_issuer_id, params[:search_issuer_id], value: params[:search_issuer_id], placeholder: 'Issuer ID', class: 'form-control' %>
+              </div>
+              <div class="col-md-3">
+                <%= submit_tag 'Search', id: 'buck_search_button', class: 'btn btn-primary' %>
+              </div> 
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default panel-body">
+          <div id = "bucks_table">
+            <%= render 'bucks_route_detail' %>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

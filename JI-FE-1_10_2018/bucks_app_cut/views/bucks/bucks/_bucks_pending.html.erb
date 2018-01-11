@@ -1,0 +1,38 @@
+<% if @bucks.blank? %>
+	<p>None</p>
+<% else %>
+	<div class="table-responsive">
+		<table class="table table-hover table-striped">
+			<thead>
+				<th><%= buck_sortable "number" %></th>
+				<th><%= buck_sortable "employee_id" %></th>
+				<th>Employee Name</th>
+				<th>Department</th>
+				<th><%= buck_sortable "value" %></th>
+				<th>Issuer</th>
+				<th>Department</th>
+				<th>Bucket</th>
+				<th><%= buck_sortable "status" %></th>
+				<th><%= buck_sortable "created_at" %></th>
+			</thead>
+			<tbody>
+			<% @bucks.each do |b| 
+				@assignedTo = Employee.find(b.employee_id) 
+				@issuer_id = Employee.find(b.issuer_id) %>
+			<tr class = "tr-list tr-clickable" onclick=" window.document.location = 'pending/<%= b.id %>'; ">
+				<td> <%= b.number %> </td>
+				<td> <%= b.employee_id %> </td>
+				<td> <%= @assignedTo.first_name + " " + @assignedTo.last_name %> </td>
+				<td> <%= Department.find(b.department_id).name %> </td>
+				<td> <%= b.value %> </td>
+				<td> <%= @issuer_id.first_name + " " + @issuer_id.last_name %> </td>
+				<td> <%= Department.find(@issuer_id.department_id).name %> </td>
+				<td> <%= Bucks::Bucket.find(b.bucket_id).name %> </td>
+				<td> <%= b.status %> </td>
+				<td> <%= l b.created_at.localtime %> </td>
+			</tr>
+			<% end %>
+			</tbody>
+		</table>
+	</div>
+<% end %>

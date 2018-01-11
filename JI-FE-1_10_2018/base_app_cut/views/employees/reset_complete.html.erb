@@ -1,0 +1,27 @@
+<% content_for :title, "Reset Complete" %>
+<div class="login-container">
+
+  <div class="login-box animated fadeInDown">
+    <div class="login-logo"> <img src="/images/pennicon.jpg" ></div>
+    <div class="login-body">
+      <div class="login-title"><strong>Success!</strong></div>
+      <p><center>Select app to log in to with new password:</center></p>
+			<div class="list-group">
+			    <a href="http://bucks.hollywoodcasinotoledo.com" class="list-group-item"><span class="badge bucks-color"><span class="fa fa-usd"></span></span> Taking Care of Business Bucks</a>
+			    <a href="#" class="list-group-item"><span class="badge mysize-color"><span class="fa fa-arrows-v "></span></span> mySize</a>
+			    <a href="#" class="list-group-item"><span class="badge tmevents-color"><span class="fa fa-calendar-o"></span></span> TM Events</a>
+			    <a href="#" class="list-group-item"><span class="badge polls-color"><span class="fa fa-bar-chart-o"></span></span> Polls</a>
+			</div>
+    </div>
+    <div class="login-footer">
+      <div class="pull-left">
+        &copy; 2017 Penn National Gaming
+      </div>
+      <div class="pull-right">
+        <%= link_to "Reset Password Again", controller: :employees, action: :reset_password %>
+      </div>
+    </div>
+  </div>
+
+</div>
+    

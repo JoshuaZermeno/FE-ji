@@ -1,0 +1,24 @@
+<div class="table-responsive">
+	<table class = "table table-striped table-clickable" id='table-bucks-employee-list'>
+		<thead>
+			<tr>
+				<th>Employee #</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Department</th>
+			</tr>
+		</thead>
+		<tbody class="tbody-height">
+			<% @employees.each do |e| 
+			@dept = Department.find(e.department_id) %>
+			<tr>
+				<td> <%= e.id %> </td>
+				<td> <%= e.first_name %> </td>
+				<td> <%= e.last_name %> </td>
+				<td> <%= @dept.name %> </td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+	</div>
+</div>

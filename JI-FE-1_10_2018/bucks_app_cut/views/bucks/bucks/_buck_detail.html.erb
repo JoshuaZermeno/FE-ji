@@ -1,0 +1,54 @@
+<% if !@buck.nil? %>
+    <h1>Buck #<%= @buck.id %></h1>
+    <% @employee = Employee.find(@buck.employee_id) %>
+    <% @issuer_id = Employee.find(@buck.issuer_id) %>
+
+    <div class="<%= getBuckStyle(Bucks::Bucket.find(@buck.bucket_id).name) %>">
+      <div><img class="buck-container--logo" src="/images/banner_logo.png"></div>
+      <div class="buck-container--info-left">
+        TEAM MEMBER:
+        <br>FROM:
+        <br>DEPARTMENT:
+        <br>DATE:
+      </div>
+
+      <div class="buck-container--info-right">
+              <textarea disabled class="buck-container--info-textarea ">
+                <%= @employee.full_name %>
+              </textarea>
+        <br><textarea disabled class="buck-container--info-textarea ">
+                <%= @issuer_id.full_name %>
+              </textarea>
+        <br><textarea disabled class="buck-container--info-textarea ">
+                <%= Department.find(Employee.find(@buck.employee_id).department_id).name %>
+              </textarea>
+        <br><textarea disabled class="buck-container--info-textarea ">
+                <%= @buck.approved_at %>
+              </textarea>
+      </div>
+      <div class="buck-container--other-info">
+      OTHER: CAN BE NO MORE THAN 10 BUCKS
+      <br><textarea disabled class="buck-container--info-textarea-other ">
+                         <%= @buck.reason %>
+                      </textarea>
+      <br><p>Number Of Bucks To Be Rewarded: <%= @buck.original_value %></p>
+    </div>
+      <br>
+     <div class="bucks-container--other-right">
+      <div class="buck-container--type-area">
+        <br><center><text class="buck-container--big-font"> BUCK AWARDED FOR:</text>
+        <br><text class="buck-container-cursive"><%= Bucks::Bucket.find(@buck.bucket_id).name %></text></center>
+
+        <br>
+        <div class="buck-container--director">
+          DIRECTOR SIGN OFF FOR "OTHER"
+          <br><textarea disabled class="buck-container--info-textarea ">
+              </textarea>
+        </div>
+      </div>
+     </div>
+    </div>
+
+<% end %>
+
+

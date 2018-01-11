@@ -1,0 +1,16 @@
+<% if @featured.blank? %>
+	<p>None</p>
+<% else %>
+<ul>
+	<% @featured.each do |p| 
+    @inventory = Bucks::Inventory.where(prize_id: p.id) %>
+    <%= link_to controller: :prizes, action: :show, id: p.id do %>
+      <div class = "featured-store-container" style="background-image: url('<%= p.get_first_image %>')">
+        <div class = "header">
+          <div class = "price"><%= @inventory.group(:price).length == 1 ? "$" + @inventory.first.price.to_s : "$" + @inventory.first.price.to_s + " - $" + @inventory.last.price.to_s %></div>
+             <p class = "name"><b><%= p.name %></b></p>
+          </div>
+       </div>
+  <% end %>
+<% end end %>
+</ul>

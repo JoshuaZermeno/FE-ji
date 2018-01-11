@@ -1,0 +1,38 @@
+<% content_for :title, "Feedback" %>
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li>Feedback</li>             
+</ul>
+<!-- END BREADCRUMB --> 
+
+<!-- START TITLE -->
+<div class="page-title">                    
+    <h2><span class="fa fa-comments"></span> Send Feedback</h2>
+</div>
+<!-- END TITLE --> 
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+	<div class="row">
+	  <div class="col-md-6">
+	    <div class="panel panel-default panel-body">
+
+	        <p>Please enter any feedback or suggestions you have about the bucks application or the bucks program in general:</p>
+
+	        <p class="text-muted"><b>From: #<%= @current_user.IDnum %> <%= @current_user.full_name %></b></p>
+
+	        <%= form_tag :action => 'feedback_deliver' do %>
+
+	        <%= text_area_tag 'feedback_message', nil, size: "64x10", id: 'feedback_message', class: 'form-control' %>
+
+	        <br/>
+
+	        <%= submit_tag 'Submit', class: 'btn btn-primary' %>
+
+	        <% end -%>
+	    </div>
+	  </div>
+	</div>
+</div>
